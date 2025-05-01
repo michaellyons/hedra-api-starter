@@ -1,12 +1,11 @@
-# Hedra API Starter Kit (Python)
+# Hedra API Starter Kit (TypeScript/Bun)
 
-This repository provides a Python starter script (`main.py`) for interacting with the Hedra API to generate videos from text prompts, images, and audio.
+This repository provides a TypeScript starter script (`index.ts`) using Bun for interacting with the Hedra API to generate videos from text prompts, images, and audio.
 
 ## Prerequisites
 
-*   **Python 3.8+**
-*   **uv**: A fast Python package installer and resolver. If you don't have it, install it following the instructions at [https://github.com/astral-sh/uv](https://github.com/astral-sh/uv).
-*   **Hedra API Key**: You need an API key from Hedra, Character-3 is in preview, to get the API key
+*   **Bun**: A fast JavaScript runtime, bundler, and package manager. Install it following the instructions at [https://bun.sh/docs/installation](https://bun.sh/docs/installation).
+*   **Hedra API Key**: You need an API key from Hedra. Character-3 is in preview, to get the API key:
     * Ensure you're on a paid Hedra plan of at least Creator tier or above.
     * Ensure you've accepted the API ToS at hedra.com/api-profile
     * Email sales@hedra.com with subject line "API Access"
@@ -29,21 +28,21 @@ This repository provides a Python starter script (`main.py`) for interacting wit
         ```
         HEDRA_API_KEY=your_actual_api_key
         ```
-        *(Note: The `.env` file is included in `.gitignore` to prevent accidentally committing your API key.)*
+        *(Note: The `.env` file is included in `.gitignore` to prevent accidentally committing your API key. Bun automatically loads `.env` files.)*
 
 3.  **Install Dependencies:**
-    Use `uv` to install the required Python packages listed in `pyproject.toml`:
+    Use `bun` to install the required Node.js packages listed in `package.json`:
     ```bash
-    uv sync
+    bun install
     ```
-    *(This command creates a virtual environment if one doesn't exist and installs/syncs the dependencies.)*
+    *(This command installs the necessary dependencies, primarily `commander` for argument parsing in this case.)*
 
 ## Usage
 
-Run the `main.py` script using `uv run`, providing the necessary arguments:
+Run the `index.ts` script using `bun run`, providing the necessary arguments:
 
 ```bash
-uv run main.py \
+bun run index.ts \
     --aspect_ratio <ratio> \
     --resolution <res> \
     --text_prompt "<your_prompt>" \
@@ -59,10 +58,15 @@ uv run main.py \
 *   `--audio_file`: Path to the input audio file (e.g., `.mp3`, `.wav`).
 *   `--image`: Path to the input image file (e.g., `.png`, `.jpg`).
 
+**Optional Arguments:**
+
+*   `--duration <seconds>`: Optional duration for the video in seconds (float).
+*   `--seed <number>`: Optional seed for generation (integer).
+
 **Example:**
 
 ```bash
-uv run main.py \
+bun run index.ts \
     --aspect_ratio 16:9 \
     --resolution 720p \
     --text_prompt "A cute cat astronaut floating in space" \
@@ -74,6 +78,6 @@ The script will:
 1.  Upload the image and audio assets.
 2.  Submit the generation request to the Hedra API.
 3.  Poll the API for the status of the generation job.
-4.  Once complete, download the generated video file (e.g., `asset_id.mp4`) to the project directory.
+4.  Once complete, download the generated video file (e.g., `asset_id.mp4` or `generation_id.mp4`) to the project directory.
 
 Check the console output for progress and the final video file location.
